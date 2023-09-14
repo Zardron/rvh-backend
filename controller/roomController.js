@@ -68,7 +68,7 @@ const addBathroom = asyncHandler(async (req, res) => {
 });
 
 const addView = asyncHandler(async (req, res) => {
-  const { name } = req.body;
+  const { data } = req.body;
   const { id } = req.params;
 
   const roomDetails = await Room.findByIdAndUpdate(
@@ -77,9 +77,53 @@ const addView = asyncHandler(async (req, res) => {
       $push: {
         view: {
           id: uniqid(),
-          name: name,
+          name: data,
         },
       },
+    },
+    { new: true }
+  );
+
+  res.json(roomDetails);
+});
+
+const changeRoomSize = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+
+  const roomDetails = await Room.findByIdAndUpdate(
+    id,
+    {
+      roomSize: name,
+    },
+    { new: true }
+  );
+
+  res.json(roomDetails);
+});
+
+const updateRoomPrice = asyncHandler(async (req, res) => {
+  const { name } = req.body;
+  const { id } = req.params;
+
+  const roomDetails = await Room.findByIdAndUpdate(
+    id,
+    {
+      roomPrice: name,
+    },
+    { new: true }
+  );
+
+  res.json(roomDetails);
+});
+const changeDescription = asyncHandler(async (req, res) => {
+  const { data } = req.body;
+  const { id } = req.params;
+
+  const roomDetails = await Room.findByIdAndUpdate(
+    id,
+    {
+      description: data,
     },
     { new: true }
   );
@@ -146,4 +190,7 @@ module.exports = {
   addFacilities,
   getSpecificRoom,
   addRoomDetails,
+  changeRoomSize,
+  changeDescription,
+  updateRoomPrice,
 };
