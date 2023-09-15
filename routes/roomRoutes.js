@@ -11,6 +11,9 @@ const {
   changeRoomSize,
   changeDescription,
   updateRoomPrice,
+  addBooking,
+  getAllBookings,
+  getSpecificBooking,
 } = require("../controller/roomController");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -18,6 +21,7 @@ const { uploadPhoto, roomImgResize } = require("../middlewares/uploadImages");
 
 router.post("/", authMiddleware, createRoom);
 router.get("/", getAllRoom);
+router.get("/all-bookings", getAllBookings);
 router.get("/room-details/:id", getSpecificRoom);
 router.put("/bathroom/:id", addBathroom);
 router.put("/room-size/:id", changeRoomSize);
@@ -32,4 +36,8 @@ router.put(
   roomImgResize,
   uploadImages
 );
+router.post("/booking", addBooking)
+router.post("/booking-details", getSpecificBooking)
+
+
 module.exports = router;

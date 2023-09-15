@@ -6,6 +6,7 @@ const {
 } = require("../utils/cloudinary");
 const fs = require("fs");
 const uniqid = require("uniqid");
+const Booking = require("../models/bookingModel");
 
 const createRoom = asyncHandler(async (req, res) => {
   const newRoom = await Room.create(req.body);
@@ -181,6 +182,24 @@ const uploadImages = asyncHandler(async (req, res) => {
   }
 });
 
+const addBooking = asyncHandler (async (req, res) => {
+const booking = await Booking.create(req.body)
+
+const bookingDetails = await Booking.find({_id: booking._id})
+res.json(bookingDetails)
+})
+
+const getAllBookings = asyncHandler (async (req, res) => {
+  const bookingDetails = await Booking.find()
+  res.json(bookingDetails)
+  })
+
+  const getSpecificBooking = asyncHandler (async (req, res) => {
+    const bookingDetails = await Booking.findOne({bookingRef: req.body.bookingRef})
+    res.json(bookingDetails)
+    })
+  
+
 module.exports = {
   createRoom,
   getAllRoom,
@@ -193,4 +212,7 @@ module.exports = {
   changeRoomSize,
   changeDescription,
   updateRoomPrice,
+  addBooking,
+  getAllBookings,
+  getSpecificBooking
 };
