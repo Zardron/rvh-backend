@@ -208,6 +208,26 @@ const getSpecificBooking = asyncHandler(async (req, res) => {
   }
 });
 
+const cancelBooking = asyncHandler(async (req, res) => {
+  const { id } = req.body;
+
+  const bookingDetails = await Booking.findByIdAndUpdate(
+    id,
+    {
+      bookingStatus: "Cancelled",
+    },
+    { new: true }
+  );
+
+  if (!bookingDetails) {
+    res.status(404).send({
+      message: "Cannot find booking details with this booking reference",
+    });
+  } else {
+    res.json(bookingDetails);
+  }
+});
+
 module.exports = {
   createRoom,
   getAllRoom,
@@ -223,4 +243,5 @@ module.exports = {
   addBooking,
   getAllBookings,
   getSpecificBooking,
+  cancelBooking,
 };

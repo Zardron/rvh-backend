@@ -14,6 +14,7 @@ const {
   addBooking,
   getAllBookings,
   getSpecificBooking,
+  cancelBooking,
 } = require("../controller/roomController");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -38,5 +39,6 @@ router.put(
 );
 router.post("/booking", addBooking);
 router.post("/booking-details", getSpecificBooking);
+router.post("/cancel-booking", cancelBooking);
 
 module.exports = router;
