@@ -21,7 +21,7 @@ const corsOptions = {
     "http://localhost:3000",
     "http://localhost:3001",
     "https://royal-view-hotel.vercel.app",
-    "https://royal-view-hotel-admin-zardron.vercel.app",
+    "https://royal-view-hotel-admin.vercel.app/",
   ],
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
