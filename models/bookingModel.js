@@ -4,10 +4,10 @@ const mongoose = require("mongoose"); // Erase if already required
 var bookingSchema = new mongoose.Schema(
   {
     bookingRef: {
-        type: String
+      type: String,
     },
     roomId: {
-        type: String
+      type: String,
     },
     roomName: {
       type: String,
@@ -17,50 +17,56 @@ var bookingSchema = new mongoose.Schema(
       type: String,
     },
     totalPrice: {
-      type: String
+      type: String,
     },
     lengthOfStay: {
-        type: String
+      type: String,
     },
     checkInDate: {
-        type: String
+      type: String,
     },
     checkOutDate: {
-        type: String
+      type: String,
     },
     adults: {
-        type: String
+      type: String,
     },
     childrens: {
-        type: String
+      type: String,
     },
     customerDetails: [
-        {
-            fullname: {
-                type: String
-            },
-            address: {
-                type: String
-            },
-            contactNumber: {
-                type: String
-            }
-        }
+      {
+        fullname: {
+          type: String,
+        },
+        email: {
+          type: String,
+        },
+        address: {
+          type: String,
+        },
+        contactNumber: {
+          type: String,
+        },
+      },
     ],
     cardDetails: [
-        {
-            cardNo: {
-                type: String
-            },
-            cardExpiry: {
-                type: String
-            },
-            cardCVV: {
-                type: String
-            }
-        }
-    ]
-   
+      {
+        cardNo: {
+          type: String,
+        },
+        cardExpiry: {
+          type: String,
+        },
+        cardCVV: {
+          type: String,
+        },
+      },
+    ],
+    bookingStatus: {
+      type: String,
+      default: "Confirmed",
+    },
   },
   {
     timestamps: true,

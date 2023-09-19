@@ -36,8 +36,7 @@ router.put(
   roomImgResize,
   uploadImages
 );
-router.post("/booking", addBooking)
-router.post("/booking-details", getSpecificBooking)
-
+router.post("/booking", addBooking);
+router.post("/booking-details", getSpecificBooking);
 
 module.exports = router;

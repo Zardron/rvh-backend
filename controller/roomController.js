@@ -182,23 +182,31 @@ const uploadImages = asyncHandler(async (req, res) => {
   }
 });
 
-const addBooking = asyncHandler (async (req, res) => {
-const booking = await Booking.create(req.body)
+const addBooking = asyncHandler(async (req, res) => {
+  const booking = await Booking.create(req.body);
 
-const bookingDetails = await Booking.find({_id: booking._id})
-res.json(bookingDetails)
-})
+  const bookingDetails = await Booking.find({ _id: booking._id });
+  res.json(bookingDetails);
+});
 
-const getAllBookings = asyncHandler (async (req, res) => {
-  const bookingDetails = await Booking.find()
-  res.json(bookingDetails)
-  })
+const getAllBookings = asyncHandler(async (req, res) => {
+  const bookingDetails = await Booking.find();
+  res.json(bookingDetails);
+});
 
-  const getSpecificBooking = asyncHandler (async (req, res) => {
-    const bookingDetails = await Booking.findOne({bookingRef: req.body.bookingRef})
-    res.json(bookingDetails)
-    })
-  
+const getSpecificBooking = asyncHandler(async (req, res) => {
+  const bookingDetails = await Booking.findOne({
+    bookingRef: req.body.bookingRef,
+  });
+
+  if (!bookingDetails) {
+    res.status(404).send({
+      message: "Cannot find booking details with this booking reference",
+    });
+  } else {
+    res.json(bookingDetails);
+  }
+});
 
 module.exports = {
   createRoom,
@@ -214,5 +222,5 @@ module.exports = {
   updateRoomPrice,
   addBooking,
   getAllBookings,
-  getSpecificBooking
+  getSpecificBooking,
 };
