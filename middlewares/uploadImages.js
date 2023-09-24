@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../tmp/"));
+    cb(null, path.join(process.cwd(), "../tmp/"));
   },
   filename: function (req, file, cb) {
     const uniquesuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -34,8 +34,8 @@ const roomImgResize = async (req, res, next) => {
         .resize(300, 300)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
-        .toFile(`../tmp/${file.filename}`);
-      fs.unlinkSync(`../tmp/${file.filename}`);
+        .toFile(`${process.cwd()}/${file.filename}`);
+      fs.unlinkSync(`${process.cwd()}/${file.filename}`);
     })
   );
   next();
