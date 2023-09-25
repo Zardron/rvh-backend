@@ -20,10 +20,29 @@ const { authMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
 const { uploadPhoto, roomImgResize } = require("../middlewares/uploadImages");
 
-router.post("/", authMiddleware, createRoom);
+var cors = require("cors");
+
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://royal-view-hotel.vercel.app",
+    "https://royal-view-hotel-admin.vercel.app",
+  ],
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+router.post("/", authMiddleware, cors(corsOptions), createRoom);
 router.get("/", getAllRoom);
 router.get("/all-bookings", getAllBookings);
 router.get("/room-details/:id", getSpecificRoom);
+router.put(
+  "/upload/:id",
+  // uploadPhoto.array("images", 10),
+  // roomImgResize,
+  uploadImages
+);
 router.put("/bathroom/:id", addBathroom);
 router.put("/room-size/:id", changeRoomSize);
 router.put("/room-price/:id", updateRoomPrice);
@@ -31,12 +50,7 @@ router.put("/description/:id", changeDescription);
 router.put("/view/:id", addView);
 router.put("/facilities/:id", addFacilities);
 router.put("/details/:id", addRoomDetails);
-router.put(
-  "/upload/:id",
-  uploadPhoto.array("images", 10),
-  roomImgResize,
-  uploadImages
-);
+
 router.post("/booking", addBooking);
 router.post("/booking-details", getSpecificBooking);
 router.post("/cancel-booking", cancelBooking);

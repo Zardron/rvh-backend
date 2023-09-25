@@ -154,33 +154,59 @@ const addFacilities = asyncHandler(async (req, res) => {
 
 const uploadImages = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const { photos } = req.body;
 
-  try {
-    const uploader = (path) => cloudinaryUploadImg(path, "images");
-    const urls = [];
-    const files = req.files;
-    for (const file of files) {
-      const { path } = file;
-      const newpath = await uploader(path);
-      urls.push(newpath);
-      fs.unlinkSync(path);
-    }
+  const room = await Room.findById(id);
 
+  const alreadyAdded = room?.images.find((aw) => aw.url === photos);
+
+  if (alreadyAdded === undefined) {
     const findRoom = await Room.findByIdAndUpdate(
       id,
       {
-        images: urls.map((file) => {
-          return file;
-        }),
+        $push: {
+          images: {
+            url: photos,
+          },
+        },
       },
       { new: true }
     );
-
     res.json(findRoom);
-  } catch (error) {
-    throw new Error(error);
+  } else {
+    res.status(401).json({ message: "Image is already added!" });
   }
 });
+
+// const uploadImages = asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const uploader = (path) => cloudinaryUploadImg(path, "images");
+//     const urls = [];
+//     const files = req.files;
+//     for (const file of files) {
+//       const { path } = file;
+//       const newpath = await uploader(path);
+//       urls.push(newpath);
+//       fs.unlinkSync(path);
+//     }
+
+//     const findRoom = await Room.findByIdAndUpdate(
+//       id,
+//       {
+//         images: urls.map((file) => {
+//           return file;
+//         }),
+//       },
+//       { new: true }
+//     );
+
+//     res.json(findRoom);
+//   } catch (error) {
+//     throw new Error(error);
+//   }
+// });
 
 const addBooking = asyncHandler(async (req, res) => {
   const booking = await Booking.create(req.body);
