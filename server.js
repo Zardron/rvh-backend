@@ -20,6 +20,8 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:3001",
+    "https://zar-portfolio.tech",
+    "https://www.zar-portfolio.tech",
     "https://royal-view-hotel.vercel.app",
     "https://royal-view-hotel-admin.vercel.app",
   ],

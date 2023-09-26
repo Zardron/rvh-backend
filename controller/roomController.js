@@ -254,6 +254,46 @@ const cancelBooking = asyncHandler(async (req, res) => {
   }
 });
 
+// DELETE
+
+const deleteImages = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { url } = req.body;
+
+  const room = await Room.findByIdAndUpdate(
+    id,
+    {
+      $pull: {
+        images: {
+          url: url,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  if (room) {
+    res.status(200).json({ message: "Image has been deleted" });
+  }
+
+  // if (alreadyAdded === undefined) {
+  //   const findRoom = await Room.findByIdAndUpdate(
+  //     id,
+  //     {
+  //       $push: {
+  //         images: {
+  //           url: photos,
+  //         },
+  //       },
+  //     },
+  //     { new: true }
+  //   );
+  //   res.json(findRoom);
+  // } else {
+  //   res.status(401).json({ message: "Image is already added!" });
+  // }
+});
+
 module.exports = {
   createRoom,
   getAllRoom,
@@ -270,4 +310,5 @@ module.exports = {
   getAllBookings,
   getSpecificBooking,
   cancelBooking,
+  deleteImages,
 };
