@@ -16,6 +16,11 @@ const {
   getSpecificBooking,
   cancelBooking,
   deleteImages,
+  deleteOverview,
+  deleteView,
+  deleteBathroom,
+  deleteFacilities,
+  roomAvailability,
 } = require("../controller/roomController");
 const { authMiddleware } = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -45,6 +50,11 @@ router.put(
   uploadImages
 );
 router.put("/delete-image/:id", deleteImages);
+router.put("/delete-overview/:id", deleteOverview);
+router.put("/delete-view/:id", deleteView);
+router.put("/delete-bathroom/:id", deleteBathroom);
+router.put("/delete-facilities/:id", deleteFacilities);
+router.put("/room-availability/:id", roomAvailability);
 router.put("/bathroom/:id", addBathroom);
 router.put("/room-size/:id", changeRoomSize);
 router.put("/room-price/:id", updateRoomPrice);

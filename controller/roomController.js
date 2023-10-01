@@ -294,6 +294,107 @@ const deleteImages = asyncHandler(async (req, res) => {
   // }
 });
 
+const deleteOverview = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const room = await Room.findByIdAndUpdate(
+    id,
+    {
+      $pull: {
+        roomDetails: {
+          name: name,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  if (room) {
+    res.status(200).json({ message: "Overview has been deleted" });
+  }
+});
+
+const deleteView = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const room = await Room.findByIdAndUpdate(
+    id,
+    {
+      $pull: {
+        view: {
+          name: name,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  if (room) {
+    res.status(200).json({ message: "View has been deleted" });
+  }
+});
+
+const deleteBathroom = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const room = await Room.findByIdAndUpdate(
+    id,
+    {
+      $pull: {
+        inBathroom: {
+          name: name,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  if (room) {
+    res.status(200).json({ message: "Bathroom has been deleted" });
+  }
+});
+
+const deleteFacilities = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  const room = await Room.findByIdAndUpdate(
+    id,
+    {
+      $pull: {
+        facilities: {
+          name: name,
+        },
+      },
+    },
+    { new: true }
+  );
+
+  if (room) {
+    res.status(200).json({ message: "Facilities has been deleted" });
+  }
+});
+
+const roomAvailability = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { availability } = req.body;
+
+  const room = await Room.findByIdAndUpdate(
+    id,
+    {
+      isAvailable: availability,
+    },
+    { new: true }
+  );
+
+  if (room) {
+    res.status(200).json({ message: "Availability has been updated" });
+  }
+});
+
 module.exports = {
   createRoom,
   getAllRoom,
@@ -311,4 +412,9 @@ module.exports = {
   getSpecificBooking,
   cancelBooking,
   deleteImages,
+  deleteOverview,
+  deleteView,
+  deleteBathroom,
+  deleteFacilities,
+  roomAvailability,
 };
